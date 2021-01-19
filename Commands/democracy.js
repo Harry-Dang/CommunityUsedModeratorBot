@@ -15,25 +15,25 @@ module.exports = {
       muteTime = args[1];
     }
     if (member.roles.cache.some(role => role.name === 'Muted') || message.client.muted.has(member)) {
-      return message.reply('<@member id> is already muted');
+      return message.reply(`${member} is already muted`);
     }
-    if (Math.random() >= 0.5) {
-      const roles = [member.roles.cache.values()];
+    if (Math.random() >= 0.0) {
+      console.log('inside democracy');
+      const roles = member.roles.cache;
+      console.log(roles);
       message.client.muted.set(member, roles);
       const muteRole = message.guild.roles.cache.find(role => role.name === 'Muted');
       member.roles.add(muteRole);
-      roles.forEach(function (role) {
-        member.roles.remove(role);
-      });
-      message.reply('i flipped a coin and got **heads**\n<@member id> has been muted for ' + muteTime + ' minute(s)');
+      member.roles.remove(roles);
+      message.reply(`i flipped a coin and got **heads**\n${member} has been muted for ` + muteTime + ' minute(s)');
       setTimeout(() => {
+        console.log('inside timeout');
         member.roles.remove(muteRole);
-        roles.forEach(function (role) {
-          member.roles.add(role);
-        });
+        member.roles.add(roles);
         message.client.muted.delete(member);
+        message.channel.send('it has been ' + muteTime + ` minute(s) so ${member} has been unmuted`);
+        console.log('timeout done');
       }, muteTime * msPerMin);
-      message.channel.send('it has been ' + muteTime + 'minute(s) so <@member id> has been unmuted');
     }
     else {
       return message.reply('i flipped a coin and got **tails**');
