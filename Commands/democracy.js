@@ -17,7 +17,7 @@ module.exports = {
     if (member.roles.cache.some(role => role.name === 'Muted') || message.client.muted.has(member)) {
       return message.reply(`${member} is already muted`);
     }
-    if (Math.random() >= 0.0) {
+    if (Math.random() >= 0.5) {
       console.log('inside democracy');
       const roles = member.roles.cache;
       console.log(roles);
