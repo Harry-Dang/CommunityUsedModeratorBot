@@ -11,7 +11,7 @@ module.exports = {
   execute(message, args) {
     const member = message.mentions.members.first();
     let muteTime = 1;
-    if (args.length >= 1) {
+    if (args.length >= 2) {
       muteTime = args[1];
     }
     if (member.roles.cache.some(role => role.name === 'Muted') || message.client.muted.has(member)) {
