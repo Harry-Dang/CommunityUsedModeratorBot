@@ -106,3 +106,11 @@ client.on('message', (message) => {
 
 // login to Discord with your app's token
 client.login(process.env.TOKEN);
+
+// keep awake, for repl.it hosting
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end('ok');
+});
+server.listen(3000);
