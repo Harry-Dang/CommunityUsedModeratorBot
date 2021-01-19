@@ -41,6 +41,9 @@ for (const file of commandFiles) {
 // initializaes cooldown
 const cooldowns = new Discord.Collection();
 
+// initialize muted members
+client.muted = new Discord.Collection();
+
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
 client.once('ready', () => {
