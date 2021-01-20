@@ -24,7 +24,7 @@ module.exports = {
     if (member.roles.cache.some(role => role.name === 'Muted') || message.client.muted.has(member)) {
       return message.reply(`${member} is already muted`);
     }
-    if (Math.random() >= probability) {
+    if (Math.random() < probability) {
       const roles = member.roles.cache;
       message.client.muted.set(member, roles);
       const muteRole = message.guild.roles.cache.find(role => role.name === 'Muted');
