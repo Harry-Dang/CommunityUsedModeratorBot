@@ -9,7 +9,7 @@ module.exports = {
   guildOnly: true,
   cooldown: 5,
   execute(message, args) {
-    if (!message.author.roles.cache.some(role => role.name === 'The Tim Beal Council' || role.name === 'Kamala Harris')) {
+    if (!message.guild.members.fetch(message.author.id).roles.cache.some(role => role.name === 'The Tim Beal Council' || role.name === 'Kamala Harris')) {
       return message.reply('you don\' have sufficient privileges for this command');
     }
     const member = message.mentions.members.first();
