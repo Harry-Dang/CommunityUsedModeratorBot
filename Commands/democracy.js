@@ -11,7 +11,7 @@ module.exports = {
   execute(message, args) {
     message.guild.members.fetch(message.author).then(author => {
       if (!(author.roles.cache.some(role => role.name === 'The Tim Beal Council' || role.name === 'Kamala Harris'))) {
-        return message.reply('you don\' have sufficient privileges for this command');
+        return message.reply('you don\'t have sufficient privileges for this command');
       }
       const member = message.mentions.members.first();
       let muteTime = 1;
