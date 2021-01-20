@@ -18,21 +18,17 @@ module.exports = {
       return message.reply(`${member} is already muted`);
     }
     if (Math.random() >= 0.5) {
-      console.log('inside democracy');
       const roles = member.roles.cache;
-      console.log(roles);
       message.client.muted.set(member, roles);
       const muteRole = message.guild.roles.cache.find(role => role.name === 'Muted');
       member.roles.add(muteRole);
       member.roles.remove(roles);
       message.reply(`i flipped a coin and got **heads**\n${member} has been muted for ` + muteTime + ' minute(s)');
       setTimeout(() => {
-        console.log('inside timeout');
         member.roles.remove(muteRole);
         member.roles.add(roles);
         message.client.muted.delete(member);
         message.channel.send('it has been ' + muteTime + ` minute(s) so ${member} has been unmuted`);
-        console.log('timeout done');
       }, muteTime * msPerMin);
     }
     else {
