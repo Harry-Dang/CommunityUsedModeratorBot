@@ -16,10 +16,10 @@ module.exports = {
       const member = message.mentions.members.first();
       let muteTime = 1;
       let probability = 0.5;
-      if (args[1] > 0 && args[1] <= 10) {
+      if (args[1] >= 0 && args[1] <= 10) {
         muteTime = args[1];
       }
-      else if (args[1] < 0 && args[1] > 10) {
+      else if (args[1] < 0 || args[1] > 10) {
         return message.reply('invalid mute time, must be between 0 and 10 minutes');
       }
       if (args[2] >= 0 && args[2] <= 1) {
