@@ -9,6 +9,9 @@ module.exports = {
   guildOnly: true,
   cooldown: 5,
   execute(message, args) {
+    if (!message.author.roles.cache.some(role => role.name === 'The Tim Beal Council' || role.name === 'Kamala Harris')) {
+      return message.reply('you don\' have sufficient privileges for this command');
+    }
     const member = message.mentions.members.first();
     let muteTime = 1;
     let probability = 0.5;
