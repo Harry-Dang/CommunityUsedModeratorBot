@@ -10,7 +10,7 @@ module.exports = {
   cooldown: 5,
   execute(message, args) {
     message.guild.members.fetch(message.author).then(member => {
-      if (member.roles.cache.some(role => role.name === 'The Tim Beal Council' || role.name === 'Kamala Harris')) {
+      if (!(member.roles.cache.some(role => role.name === 'The Tim Beal Council' || role.name === 'Kamala Harris'))) {
         return message.reply('you don\' have sufficient privileges for this command');
       }
     });
