@@ -14,6 +14,9 @@ module.exports = {
         return message.reply('you don\'t have sufficient privileges for this command');
       }
       const member = message.mentions.members.first();
+      if (member.id === '800901935153807380') {
+        return message.reply('please don\'t mute me :pleading_face:');
+      }
       let muteTime = 1;
       let probability = 0.5;
       if (args[1] >= 0 && args[1] <= 10) {
