@@ -2,7 +2,7 @@ const msPerMin = 60000;
 
 module.exports = {
   name: 'democracy',
-  description: 'flips a coin, if heads: mutes the specified member for one minute or `time_length` minutes. By default, the coin is fair, but can be changed using `coin_probability`. `coin_probability` must be between 0 and 1',
+  description: 'flips a coin, if heads: mutes the specified member for one minute or `time_length` minutes (max is 10 min). By default, the coin is fair, but can be changed using `coin_probability`. `coin_probability` must be between 0 and 1',
   aliases: ['mute'],
   args: true,
   usage: 'user [time_length] [coin_probability]',
@@ -19,8 +19,11 @@ module.exports = {
       if (args.length >= 2) {
         muteTime = args[1];
       }
-      if (args[1]) {
+      if (args[1] > 0 && args[1] <= 10) {
         muteTime = args[1];
+      }
+      else if (args[1] < 0 && args[1] > 10) {
+        return message.reply('invalid mute time, must be between 0 and 10 minutes');
       }
       if (args[2] >= 0 && args[2] <= 1) {
         probability = args[2];
