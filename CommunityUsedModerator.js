@@ -6,9 +6,12 @@ Discord bot created for the private Discord server Anti GTP GTP Club for private
 
 TODO:
 customize help menu
-add democracy command
 add quarantine radio schedule command
 add response for invalid command
+make ig embed prettier
+support ig videos maybe
+support ig multi img posts
+fix ig embed to work better with async calls
 
 Made following Discord.js guide and An Idiot's Guide tutorial
 */
@@ -18,11 +21,11 @@ const fs = require('fs');
 // require the dotenv module
 const dotenv = require('dotenv');
 dotenv.config();
+const prefix = process.env.PREFIX;
 // require the discord.js module
 const Discord = require('discord.js');
 // requre the config file
 // const { prefix } = require('./config.json');
-const prefix = process.env.PREFIX;
 
 // create a new Discord client
 const client = new Discord.Client();
@@ -38,6 +41,8 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
+const { embedIG } = require('./util/ig.js');
+
 // initializaes cooldown
 const cooldowns = new Discord.Collection();
 
@@ -51,8 +56,11 @@ client.once('ready', () => {
 });
 
 client.on('message', (message) => {
+  if (message.content.startsWith('https://www.instagram.com/p/')) {
+    embedIG(message);
+  }
   // exit if message doesn't contain prefix or is made by another bot
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  else if (!message.content.startsWith(prefix) || message.author.bot) { return; }
 
   // parses input message
   const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -101,6 +109,8 @@ client.on('message', (message) => {
     command.execute(message, args);
   }
   catch (error) {
+    console.log('\n');
+    console.log(now);
     console.error(error);
     message.reply('there was an error trying to execute that command!');
     message.channel.send(error.name + ': ' + error.message);
