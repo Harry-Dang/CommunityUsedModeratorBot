@@ -24,14 +24,19 @@ module.exports = {
       return message.reply('invalid start time');
     }
 
+    const announcementChannel =
+      message.client.channels.cache.find(channel => channel.name === 'announcements');
+
     // confirmation message
-    message.channel.send(
+    // message.channel.send(
+    announcementChannel.send(
       createQREmbed(args[0], member, args[2], start,
         message.attachments.first(), ''));
     // 1 hr warning
     if (hrTimeOut > 0) {
       setTimeout(() => {
-        message.channel.send(
+        // message.channel.send(
+        announcementChannel.send(
           createQREmbed(args[0], member, args[2], start,
             message.attachments.first(), 'starts in 1 hour'));
       }, start.valueOf() - now.valueOf() - hourMS);
@@ -39,14 +44,16 @@ module.exports = {
     // 5 min warning
     if (fiveTimeOut > 0) {
       setTimeout(() => {
-        message.channel.send(
+        // message.channel.send(
+        announcementChannel.send(
           createQREmbed(args[0], member, args[2], start,
             message.attachments.first(), 'starts in 5 min, pull up'));
       }, start.valueOf() - now.valueOf() - fiveMS);
     }
     // start warning
     setTimeout(() => {
-      message.channel.send(
+      // message.channel.send(
+      announcementChannel.send(
         createQREmbed(args[0], member, args[2], start,
           message.attachments.first(), 'starting now! pull tf up'));
     }, start.valueOf() - now.valueOf());
