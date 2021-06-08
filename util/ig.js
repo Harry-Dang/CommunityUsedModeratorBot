@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { resolve } = require('path');
 
 const headers = {
   'authority': 'www.instagram.com',
@@ -16,17 +17,17 @@ const headers = {
 
 const json = '/?__a=1';
 
-function getImage(message, link) {
-  axios({
+function getImage(link) {
+  return axios({
     url: link,
     headers: headers,
     referrerPolicy: 'strict-origin-when-cross-origin',
   }).then((response) => {
     const data = response.data;
+    console.log(data);
     const imgs = data.graphql.shortcode_media.display_resources;
     const img = imgs[imgs.length - 1].src;
-    // return img;
-    return message.channel.send(img);
+    // return message.channel.send(img);
   });
 }
 
@@ -39,10 +40,10 @@ function embedIG(message) {
   if (link.slice(25, 28) === '/p/') {
     // check if it is a post
     const apilink = link.slice(0, 39) + json;
-    getImage(message, apilink);
+    // getImage(message, apilink);
     // getImage(apilink).then((img) => { return message.channel.send(img); });
-    // const img = getImage(apilink);
-    // return message.channel.send(img);
+    const img = await getImage(apilink);
+    return message.channel.send(img);
   }
 }
 
